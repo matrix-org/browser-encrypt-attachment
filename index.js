@@ -80,6 +80,7 @@ function decryptAttachment(ciphertextBuffer, info) {
  */
 function encodeBase64(uint8Array) {
     // Misinterpt the Uint8Array as Latin-1.
+    // window.btoa expects a unicode string with codepoints in the range 0-255.
     var latin1String = String.fromCharCode.apply(null, uint8Array);
     // Use the builtin base64 encoder.
     var paddedBase64 = window.btoa(latin1String);
@@ -98,7 +99,8 @@ function encodeBase64(uint8Array) {
 function decodeBase64(base64) {
     // Pad the base64 up to the next multiple of 4.
     var paddedBase64 = base64 + "===".slice(0, (4 - base64.length % 4) % 4);
-    // Decode the base64 as a misinterpted Latin-1 string.
+    // Decode the base64 as a misinterpreted Latin-1 string.
+    // window.atob returns a unicode string with codepoints in the range 0-255.
     var latin1String = window.atob(paddedBase64);
     // Encode the string as a Uint8Array as Latin-1.
     var uint8Array = new Uint8Array(latin1String.length);
