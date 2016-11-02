@@ -1,4 +1,9 @@
 
+/**
+ * Test if two things are equal after JSON stringification.
+ * The arguments must be numbers, strings or arrays otherwise the behaviour is
+ * undefined.
+ */
 function assertEq(got, want) {
     gotJSON = JSON.stringify(got);
     wantJSON = JSON.stringify(want);
