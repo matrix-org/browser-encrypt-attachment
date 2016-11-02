@@ -1,7 +1,7 @@
 /**
  * Encrypt an attachment.
  * @param {ArrayBuffer} plaintextBuffer The attachment data buffer.
- * @return {Promise} A promise that resolves with a object when the attachment is encrypted.
+ * @return {Promise} A promise that resolves with an object when the attachment is encrypted.
  *      The object has a "data" key with an ArrayBuffer of encrypted data and an "info" key
  *      with an object containing the info needed to decrypt the data.
  */
