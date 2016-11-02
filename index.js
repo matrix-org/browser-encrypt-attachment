@@ -109,8 +109,8 @@ function decodeBase64(base64) {
 }
 
 try {
-    exports.encrypt = encrypt;
-    exports.decrypt = decrypt;
+    exports.encryptAttachment = encryptAttachment;
+    exports.decryptAttachment = decryptAttachment;
 }
 catch (e) {
     // Ignore unknown variable "exports" errors when this is loaded directly into a browser
