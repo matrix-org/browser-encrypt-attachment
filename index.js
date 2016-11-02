@@ -50,6 +50,9 @@ function encryptAttachment(plaintextBuffer) {
  * Decrypt an attachment.
  * @param {ArrayBuffer} ciphertextBuffer The encrypted attachment data buffer.
  * @param {Object} info The information needed to decrypt the attachment.
+ * @param {Object} info.key AES-GCM JWK key object.
+ * @param {string} info.iv Base64 encoded AES-GCM IV.
+ * @param {string} info.hashes.sha256 Base64 encoded SHA-256 hash of the ciphertext.
  * @return {Promise} A promise that resolves with an ArrayBuffer when the attachment is decrypted.
  */
 function decryptAttachment(ciphertextBuffer, info) {
