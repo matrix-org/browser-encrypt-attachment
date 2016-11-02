@@ -93,6 +93,7 @@ function encodeBase64(uint8Array) {
 
 /**
  * Decode a base64 string to a typed array of uint8.
+ * This will decode unpadded base64, but will also accept base64 with padding.
  * @param {string} base64 The unpadded base64 to decode.
  * @return {Uint8Array} The decoded data.
  */
