@@ -56,6 +56,12 @@ function encryptAttachment(plaintextBuffer) {
  * @return {Promise} A promise that resolves with an ArrayBuffer when the attachment is decrypted.
  */
 function decryptAttachment(ciphertextBuffer, info) {
+
+    if (info === undefined || info.key === undefined || info.iv === undefined
+        || info.hashes === undefined || info.hashes.sha256 === undefined) {
+       throw new Error("Invalid info. Missing info.key, info.iv or info.hashes.sha256 key");
+    }
+
     var cryptoKey; // The AES key object.
     var ivArray = decodeBase64(info.iv);
     var expectedSha256base64 = info.hashes.sha256;
