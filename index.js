@@ -114,4 +114,6 @@ try {
 }
 catch (e) {
     // Ignore unknown variable "exports" errors when this is loaded directly into a browser
+    // This means that we can test it without having to use browserify.
+    // The intention is that the library is used using browserify.
 }
