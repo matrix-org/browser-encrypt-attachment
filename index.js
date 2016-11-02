@@ -89,7 +89,7 @@ function encodeBase64(uint8Array) {
     var paddedBase64 = window.btoa(latin1String);
     // Calculate the unpadded length.
     var inputLength = uint8Array.length;
-    var outputLength = 4 * (((inputLength + 2) / 3) | 0) + (inputLength + 2) % 3 - 2;
+    var outputLength = 4 * Math.floor((inputLength + 2) / 3) + (inputLength + 2) % 3 - 2;
     // Return the unpadded base64.
     return paddedBase64.slice(0, outputLength);
 }
