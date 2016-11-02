@@ -1,6 +1,12 @@
 #! /usr/bin/env python
 
-# pip install cryptography
+"""
+Generate test vectors for decryption tests
+
+Needs the cryptography module installed to use:
+
+    pip install cryptography
+"""
 
 from cryptography.hazmat.backends import default_backend
 
