@@ -21,7 +21,19 @@ describe("DecryptAttachment", function() {
                 "key_ops": ["encrypt", "decrypt"],
                 "kty": "oct"
             }, "iv": "/////////////////////w"
-        }, "SGVsbG8sIFdvcmxk"]
+        }, "SGVsbG8sIFdvcmxk"],
+        ["tJVNBVJ/vl36UQt4Y5e5myqUL3M8OtjRVQljZ+LlwbJeucRIM7CeKDJGGOjlJ1bqpqUdl6zytXJ3dCyvnUi4eQ", {
+            "hashes": {
+                "sha256": "/K4w3G4zlLK312k66KxNPKDkWCn2QAH5aphAkuncTrQ"
+            },
+            "key": {
+                "kty": "oct",
+                "key_ops": ["encrypt","decrypt"],
+                "k": "__________________________________________8",
+                "alg": "A256CTR"
+            },
+            "iv": "/////////////////////w"
+        }, "YWxwaGFudW1lcmljYWxseWFscGhhbnVtZXJpY2FsbHlhbHBoYW51bWVyaWNhbGx5YWxwaGFudW1lcmljYWxseQ"]
     ];
 
     testVectors.forEach(function (vector) {

@@ -46,4 +46,5 @@ def encrypt(key, iv, plaintext):
 json.dump([
     encrypt("\x00"*32, "\x00"*16, ""),
     encrypt("\xFF"*32, "\xFF"*16, "Hello, World"),
+    encrypt("\xFF"*32, "\xFF"*16, "alphanumerically" * 4),
 ], sys.stdout)
