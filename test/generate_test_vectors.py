@@ -25,17 +25,16 @@ b64u = lambda x: base64.urlsafe_b64encode(x).rstrip("=")
 def encrypt(key, iv, plaintext):
     encryptor = Cipher(
         algorithms.AES(key),
-        modes.GCM(iv),
+        modes.CTR(iv),
         backend=default_backend()
     ).encryptor()
 
     ciphertext = encryptor.update(plaintext) + encryptor.finalize()
-    ciphertext += encryptor.tag
 
     info = {
         "key": {
             "k": b64u(key),
-            "alg": "A256GCM",
+            "alg": "A256CTR",
             "kty": "oct",
             "key_ops": ["encrypt", "decrypt"],
         },

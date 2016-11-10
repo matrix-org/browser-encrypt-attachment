@@ -15,7 +15,7 @@ function encryptAttachment(plaintextBuffer) {
     ivArray = window.crypto.getRandomValues(new Uint8Array(16));
     // Load the encryption key.
     return window.crypto.subtle.generateKey(
-        {"name": "AES-GCM", length:256}, true, ["encrypt", "decrypt"]
+        {"name": "AES-CTR", length:256}, true, ["encrypt", "decrypt"]
     ).then(function(generateKeyResult) {
         cryptoKey = generateKeyResult;
         // Export the Key as JWK.
@@ -24,7 +24,7 @@ function encryptAttachment(plaintextBuffer) {
         exportedKey = exportKeyResult;
         // Encrypt the input ArrayBuffer.
         return window.crypto.subtle.encrypt(
-            {name: "AES-GCM", iv: ivArray}, cryptoKey, plaintextBuffer
+            {name: "AES-CTR", counter: ivArray, length: 128}, cryptoKey, plaintextBuffer
         );
     }).then(function(encryptResult) {
         ciphertextBuffer = encryptResult;
@@ -67,7 +67,7 @@ function decryptAttachment(ciphertextBuffer, info) {
     var expectedSha256base64 = info.hashes.sha256;
     // Load the AES from the "key" key of the info object.
     return window.crypto.subtle.importKey(
-        "jwk", info.key, {"name": "AES-GCM"}, false, ["encrypt", "decrypt"]
+        "jwk", info.key, {"name": "AES-CTR"}, false, ["encrypt", "decrypt"]
     ).then(function (importKeyResult) {
         cryptoKey = importKeyResult;
         // Check the sha256 hash
@@ -77,7 +77,7 @@ function decryptAttachment(ciphertextBuffer, info) {
             throw new Error("Mismatched SHA-256 digest");
         }
         return window.crypto.subtle.decrypt(
-            {name: "AES-GCM", iv: ivArray}, cryptoKey, ciphertextBuffer
+            {name: "AES-CTR", counter: ivArray, length: 128}, cryptoKey, ciphertextBuffer
         );
     });
 }
