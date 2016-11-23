@@ -28,7 +28,7 @@ function encryptAttachment(plaintextBuffer) {
         // Encrypt the input ArrayBuffer.
         // Use half of the iv as the counter by setting the "length" to 64.
         return window.crypto.subtle.encrypt(
-            {name: "AES-CTR", counter: ivArray, length: 1}, cryptoKey, plaintextBuffer
+            {name: "AES-CTR", counter: ivArray, length: 64}, cryptoKey, plaintextBuffer
         );
     }).then(function(encryptResult) {
         ciphertextBuffer = encryptResult;
