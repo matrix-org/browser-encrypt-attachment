@@ -11,11 +11,12 @@ function encryptAttachment(plaintextBuffer) {
     var ciphertextBuffer; // ArrayBuffer of encrypted data.
     var sha256Buffer; // ArrayBuffer of digest.
     var ivArray; // Uint8Array of AES IV
-    // Generate a random IV.
-    ivArray = window.crypto.getRandomValues(new Uint8Array(16));
+    // Generate an IV where the first 8 bytes are random.
+    ivArray = new Uint8Array(16);
+    window.crypto.getRandomValues(ivArray.subarray(0,8));
     // Load the encryption key.
     return window.crypto.subtle.generateKey(
-        {"name": "AES-CTR", length:256}, true, ["encrypt", "decrypt"]
+        {"name": "AES-CTR", length: 256}, true, ["encrypt", "decrypt"]
     ).then(function(generateKeyResult) {
         cryptoKey = generateKeyResult;
         // Export the Key as JWK.
@@ -25,7 +26,7 @@ function encryptAttachment(plaintextBuffer) {
         // Encrypt the input ArrayBuffer.
         // Use half of the iv as the counter by setting the "length" to 64.
         return window.crypto.subtle.encrypt(
-            {name: "AES-CTR", counter: ivArray, length: 64}, cryptoKey, plaintextBuffer
+            {name: "AES-CTR", counter: ivArray, length: 1}, cryptoKey, plaintextBuffer
         );
     }).then(function(encryptResult) {
         ciphertextBuffer = encryptResult;
@@ -37,7 +38,7 @@ function encryptAttachment(plaintextBuffer) {
         return {
             data: ciphertextBuffer,
             info: {
-                v: "v1",
+                v: "v2",
                 key: exportedKey,
                 iv: encodeBase64(ivArray),
                 hashes: {
@@ -79,8 +80,8 @@ function decryptAttachment(ciphertextBuffer, info) {
             throw new Error("Mismatched SHA-256 digest");
         }
         var counterLength;
-        if (info.v == "v1") {
-            // Version 1 uses a 64 bit counter.
+        if (info.v == "v1" || info.v == "v2") {
+            // Version 1 and 2 use a 64 bit counter.
             counterLength = 64;
         } else {
             // Version 0 uses a 128 bit counter.
