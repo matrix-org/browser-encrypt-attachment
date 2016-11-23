@@ -11,7 +11,8 @@ function encryptAttachment(plaintextBuffer) {
     var ciphertextBuffer; // ArrayBuffer of encrypted data.
     var sha256Buffer; // ArrayBuffer of digest.
     var ivArray; // Uint8Array of AES IV
-    // Generate an IV where the first 8 bytes are random.
+    // Generate an IV where the first 8 bytes are random and the high 8 bytes
+    // are zero.
     ivArray = new Uint8Array(16);
     window.crypto.getRandomValues(ivArray.subarray(0,8));
     // Load the encryption key.
