@@ -12,7 +12,8 @@ function encryptAttachment(plaintextBuffer) {
     var sha256Buffer; // ArrayBuffer of digest.
     var ivArray; // Uint8Array of AES IV
     // Generate an IV where the first 8 bytes are random and the high 8 bytes
-    // are zero.
+    // are zero. We set the counter low bits to 0 since it makes it unlikely
+    // that the 64 bit counter will overflow.
     ivArray = new Uint8Array(16);
     window.crypto.getRandomValues(ivArray.subarray(0,8));
     // Load the encryption key.
