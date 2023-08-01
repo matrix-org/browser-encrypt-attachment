@@ -1,3 +1,5 @@
+> :warning: **Archived**: This library has been superceded by https://github.com/matrix-org/matrix-encrypt-attachment
+
 Browser Encrypt Attachment
 ==========================
 
